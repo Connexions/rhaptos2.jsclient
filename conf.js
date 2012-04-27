@@ -6,9 +6,9 @@
 
 var FROZONE = {
 
-    e2serverFQDN : "e2server.office.mikadosoftware.com",
-    e2repoFQDN   : "e2repo.office.mikadosoftware.com",
-    e2serverFQDN : "e2server.office.mikadosoftware.com"
+    e2serverFQDN : "<<CDN-SERVER-NAME>>",
+    e2repoFQDN   : "<<CDN-SERVER-NAME>>",
+    e2serverFQDN : "<<CDN-SERVER-NAME>>",
 
 
 }
