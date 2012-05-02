@@ -7,8 +7,8 @@
 var FROZONE = {
 
     e2serverFQDN : "<<CDN-SERVER-NAME>>",
-    e2repoFQDN   : "<<CDN-SERVER-NAME>>",
-    e2serverFQDN : "<<CDN-SERVER-NAME>>",
+    e2repoFQDN   : "<<REPO-SERVER-NAME>>",
+    wwwFQDN      : "<<WWW-SERVER-NAME>>",
 
 
 }
