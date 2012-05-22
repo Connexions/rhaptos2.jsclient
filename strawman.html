@@ -45,16 +45,16 @@ tinyMCE.init({
 <body>                                                                  
 
 <table>
-<tr><td><img src="http://cnx.org/support-cnx.png"></td></tr>
+<tr><td background-color="blue"><img src="http://cnx.org/internal-banner.gif"></td></tr>
 
 <tr><td>Text Editor:</td> 
  <td>
  <form name="fakeeditor" id="form1">
 
-    <input  type="radio" name="method" value="PUT">PUT
-    <input  type="radio" name="method" value="POST">POST
-    <input  type="radio" name="method" value="DELETE">DELETE
-    <input  type="radio" name="method" value="GET">GET
+    Username:<input  id="username" type="text" name="username" value="">
+    Modulename:<input  id="modulename" type="text" name="modulename" value="">
+
+    <hr/>
     
     <textarea id="e2textarea">This is the module text</textarea> 
  </form>
@@ -63,16 +63,15 @@ tinyMCE.init({
 <tr><td>msgs:</td> 
 <td>
 
+<div id="workspace"></div>
 <a href="" id="click1">send textarea to REST</a>
-<a href="" id="clickShowTextArea">display textarea</a>
-<a href="" id="clickLoadTextArea">load textarea with this id</a>
-    <input  type="textbox" name="box" id="mhash" value="">
+
 
 
 
 <hr/>
 
-<div id="responsearea">XXX</div>
+<div id="responsearea">Console below:</div>
 
 <hr/>
 <div id="logarea"></div>

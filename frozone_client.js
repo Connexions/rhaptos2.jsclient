@@ -1,28 +1,44 @@
 
 // :author: pbrian <paul@mikadosoftware.com>
 // :JQuery scripts for ednamode project for CNX.org
+// NB: assume conf.js is included earlier ...
 
 
-// when document is loaded, run this root function, that lisp style will call everything else.... OK.
+
 var TGTURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
 
 
     function logout(msg){
-        //TOtally assumes existence of firebug.
+        //log to a HTML area all messages
 
-        // write to a textarea in html if not firebug - Nah !!!
         var txt = $("#logarea").html();
         $("#logarea").html(txt + "<li> " + msg);
-        console.log(msg);
     };
 
+    function get_username(){
+        return $('#username').val();
+    };
+
+    function get_modulename(){
+        return $('#modulename').val();
+    };
+
+
     function get_textarea_html5(){
-        //hardcoded textare ref here....
+        //retrieve, as JSON, the contents of the edit-area 
         var txtarea = $('#e2textarea').tinymce().getContent();
-        return txtarea;
+        var payload = {
+            'username': get_username(),
+            'modulename': get_modulename(),
+            'txtarea': txtarea
+        };
+
+        var json_text = JSON.stringify(payload, null, 2);
+        return json_text;
     };
 
     function display_textarea(){
+        //put returned values into text area.
         txtarea = get_textarea_html5();
         logout(txtarea);
     };
@@ -52,13 +68,17 @@ var TGTURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
                 
     };
 
+function showres(i, elem){
+
+    logout(i + ': ' + elem);
+};
+
 
     function sendajax(){
 	 //constants
-         // TODO: really stick this here - need cleaner JS model.
-          
-
-         var requestmethod = $('input:radio[name=method]:checked').val();
+         
+         var requestmethod = 'POST';
+//         var payload = {'moduletxt':  get_textarea_html5()}; 
          var payload = {'moduletxt':  get_textarea_html5()}; 
 
 	 var menuId = 42;
@@ -66,12 +86,13 @@ var TGTURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
 	 var request = $.ajax({
 	     url: TGTURL,
 	     type: requestmethod,
-             data: payload
+             data: payload,
+             dataType:'json'
 	 });
 
 	 request.done(function(data) {
-	     //$("#responsearea").html(data);      
-	     logout(data + 'done a success');
+	     //$("#responsearea").html(data);
+             $.each(data, showres);
 	 });
 
 	 request.fail(function(jqXHR, textStatus, err) {
