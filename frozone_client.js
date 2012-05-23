@@ -23,9 +23,17 @@
     };
 
     function get_modulename(){
-        return $('#modulename').val();
+        var mname = $('#modulename').val();
+        return mname;
     };
 
+function save_validate(){
+    var modulename=get_modulename();
+    if (modulename = ''){
+        jQuery.error('Must have a modulename');
+    }
+    return
+}
 
     function get_textarea_html5(){
         //retrieve, as JSON, the contents of the edit-area 
@@ -94,7 +102,7 @@ function buildHistory(){
         dataType: 'json',
         url: WORKSPACEURL,
         success: function(historyarr){
-
+            historyarr.sort();
             $.each(historyarr, function(i,elem){
                 var strelem = "'" + elem + "'";
 		htmlfrag += '<li> <a href="#" onclick="getLoadHistoryVer(' +  strelem + ');" >' + elem + '</a>';
@@ -112,6 +120,8 @@ function showres(i, elem){
 
     function saveText(){
 	 //constants
+
+        save_validate();
          
          var requestmethod = 'POST';
 //         var payload = {'moduletxt':  get_textarea_html5()}; 
