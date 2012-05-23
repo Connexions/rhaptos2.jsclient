@@ -45,11 +45,15 @@ tinyMCE.init({
 <body>                                                                  
 
 <table>
-<tr><td background-color="blue"><img src="http://cnx.org/internal-banner.gif"></td></tr>
+<tr><td colspan="3" bgcolor="blue">
+    <img src="http://cnx.org/internal-banner.gif">
+   </td>
+</tr>
 
-<tr><td>Text Editor:</td> 
+<tr>
+ <td>Text Editor:</td> 
  <td>
- <form name="fakeeditor" id="form1">
+    <form name="fakeeditor" id="form1">
 
     Username:<input  id="username" type="text" name="username" value="">
     Modulename:<input  id="modulename" type="text" name="modulename" value="">
@@ -57,28 +61,24 @@ tinyMCE.init({
     <hr/>
     
     <textarea id="e2textarea">This is the module text</textarea> 
- </form>
-  </td> </tr>
+    </form>
+ </td> 
+ <td>
+   <div id="workspaces"></div>
+ </td> 
+ </tr>
 
-<tr><td>msgs:</td> 
-<td>
-
-<div id="workspace"></div>
-<a href="" id="click1">send textarea to REST</a>
-
-
-
-
-<hr/>
-
-<div id="responsearea">Console below:</div>
-
-<hr/>
-<div id="logarea"></div>
-
-
-
-</td></tr>
+<tr>
+ <td>msgs:</td> 
+ <td>
+   <a href="" id="click1">Save.</a>
+   <hr/>
+   <div id="responsearea">Console below:</div>
+   <hr/>
+   <div id="logarea"></div>
+ </td>
+ <td>Blank</td>
+  </tr>
 
 </table>
 

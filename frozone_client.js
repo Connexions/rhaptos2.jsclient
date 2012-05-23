@@ -5,7 +5,10 @@
 
 
 
-var TGTURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
+    var REPOBASEURL="http://" + FROZONE.e2repoFQDN + "/e2repo";
+    var MODULEURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
+    var WORKSPACEURL="http://" + FROZONE.e2repoFQDN + "/e2repo/workspace/";
+
 
 
     function logout(msg){
@@ -37,18 +40,11 @@ var TGTURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
         return json_text;
     };
 
-    function display_textarea(){
-        //put returned values into text area.
-        txtarea = get_textarea_html5();
-        logout(txtarea);
-    };
 
-    function load_textarea(){
-        //mhash box should have right id in it.
-        mhashid = $('#mhash').val()
+    function load_textarea(modulename){
         
         var request =$.ajax({
-	    url: TGTURL + mhashid,
+	    url: MODULEURL + mhashid,
             type: 'GET'
         });
 	request.done(function(data) {
@@ -64,9 +60,49 @@ var TGTURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
 	request.always(function(jqXHR, textStatus){
 	    logout(textStatus);
 	});
-
-                
     };
+
+
+function getLoadHistoryVer(filename){
+//    alert('called ' + filename);
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: MODULEURL + filename,
+        success: function(module){
+//            alert('here');
+            var modulename = module['modulename'];
+            var txtarea = module['txtarea'];
+ 
+            $('#modulename').val(modulename);
+            $('#e2textarea').tinymce().setContent(txtarea);
+        },
+
+        error: function(jqXHR, textStatus, err) {
+            logout( "Request failed: " + textStatus + ":" + err + ":" +  jqXHR.status);
+        }
+    });    
+
+
+}
+
+function buildHistory(){
+
+    var htmlfrag = '<ul>'
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: WORKSPACEURL,
+        success: function(historyarr){
+
+            $.each(historyarr, function(i,elem){
+                var strelem = "'" + elem + "'";
+		htmlfrag += '<li> <a href="#" onclick="getLoadHistoryVer(' +  strelem + ');" >' + elem + '</a>';
+                });
+            $('#workspaces').html(htmlfrag);    
+        }
+    });    
+};
 
 function showres(i, elem){
 
@@ -74,7 +110,7 @@ function showres(i, elem){
 };
 
 
-    function sendajax(){
+    function saveText(){
 	 //constants
          
          var requestmethod = 'POST';
@@ -84,7 +120,7 @@ function showres(i, elem){
 	 var menuId = 42;
 
 	 var request = $.ajax({
-	     url: TGTURL,
+	     url: MODULEURL,
 	     type: requestmethod,
              data: payload,
              dataType:'json'
@@ -93,6 +129,7 @@ function showres(i, elem){
 	 request.done(function(data) {
 	     //$("#responsearea").html(data);
              $.each(data, showres);
+             buildHistory();
 	 });
 
 	 request.fail(function(jqXHR, textStatus, err) {
@@ -110,16 +147,21 @@ function showres(i, elem){
 $(document).ready(function() {
 
     //bind various clicks
-    $("#clickShowTextArea").click(function(e){display_textarea(); 
-                                              e.preventDefault()});
 
     $("#clickLoadTextArea").click(function(e){load_textarea();
                                               e.preventDefault()});
 
-    logout('AJAX will fire at ' + TGTURL);    
+    logout('AJAX will fire at ' + MODULEURL);    
+    buildHistory();    
+
+
+    $("a").click(function(event){
+        logout('noclick');
+	event.preventDefault();
+    });
 
     $("#click1").click(function(event){
-                         sendajax();
+                         saveText();
                          event.preventDefault();
                        }
                       );
