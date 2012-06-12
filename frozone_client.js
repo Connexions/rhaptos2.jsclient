@@ -5,9 +5,9 @@
 
 
 
-    var REPOBASEURL="http://" + FROZONE.e2repoFQDN + "/e2repo";
-    var MODULEURL="http://" + FROZONE.e2repoFQDN + "/e2repo/module/";
-    var WORKSPACEURL="http://" + FROZONE.e2repoFQDN + "/e2repo/workspace/";
+    var REPOBASEURL="http://" + FROZONE.e2repoFQDN ;
+    var MODULEURL="http://" + FROZONE.e2repoFQDN + "/module/";
+    var WORKSPACEURL="http://" + FROZONE.e2repoFQDN + "/workspace/";
 
 
 
